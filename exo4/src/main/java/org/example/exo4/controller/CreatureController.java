@@ -36,6 +36,11 @@ public class CreatureController {
         return ResponseEntity.ok(this.creatureService.getCreatureById(id));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Creature>  update(@PathVariable int id, @RequestBody @Valid CreatureReceiveDto creatureReceiveDto) {
+        return ResponseEntity.ok(this.creatureService.updateCreature(id,creatureReceiveDto));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable int id) {
         this.creatureService.deleteCreatureById(id);

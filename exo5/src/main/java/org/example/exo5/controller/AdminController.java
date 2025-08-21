@@ -1,8 +1,8 @@
-package org.example.exo1.controller;
+package org.example.exo5.controller;
 
-import org.example.exo1.dto.TodoReceiveDto;
-import org.example.exo1.dto.TodoResponseDto;
-import org.example.exo1.service.TodoService;
+import org.example.exo5.dto.TodoReceiveDto;
+import org.example.exo5.dto.TodoResponseDto;
+import org.example.exo5.service.TodoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,33 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/todo")
-public class TodoCrontroller {
-    
+@RequestMapping("api/admin/todo")
+public class AdminController {
+
     private final TodoService todoService;
 
-    public TodoCrontroller(TodoService todoService) {
+    public AdminController(TodoService todoService) {
         this.todoService = todoService;
-    }
-
-    @GetMapping
-    public ResponseEntity<List<TodoResponseDto>> findAll() {
-        return ResponseEntity.ok(todoService.get());
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<TodoResponseDto> get(@PathVariable int id) {
-        return ResponseEntity.ok(todoService.get(id));
-    }
-
-    @GetMapping("/true")
-    public ResponseEntity<List<TodoResponseDto>> getValidate() {
-        return ResponseEntity.ok(todoService.get(true));
-    }
-
-    @GetMapping("/false")
-    public ResponseEntity<List<TodoResponseDto>> getNoValidate() {
-        return ResponseEntity.ok(todoService.get(false));
     }
 
     @PostMapping

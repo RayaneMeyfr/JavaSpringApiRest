@@ -1,10 +1,11 @@
-package org.example.exo1.service;
+package org.example.exo5.service;
 
-import org.example.exo1.dto.TodoReceiveDto;
-import org.example.exo1.dto.TodoResponseDto;
-import org.example.exo1.exception.NotFoundException;
-import org.example.exo1.model.Todo;
-import org.example.exo1.repository.TodoRepository;
+
+import org.example.exo5.dto.TodoReceiveDto;
+import org.example.exo5.dto.TodoResponseDto;
+import org.example.exo5.entity.Todo;
+import org.example.exo5.exception.NotFoundException;
+import org.example.exo5.repository.TodoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,11 +32,16 @@ public class TodoService {
 
     public TodoResponseDto update(int id, TodoReceiveDto todoReceiveDto) {
         Todo todoFind = todoRepository.findById(id).orElseThrow(NotFoundException::new);
-        Todo todoGet = todoReceiveDto.dtoToEntityUpdate();
+        Todo todoGet = todoReceiveDto.dtoToEntity();
         todoFind.setTitle(todoGet.getTitle());
         todoFind.setDescription(todoGet.getDescription());
         todoFind.setDate(todoGet.getDate());
-        todoFind.setIsValidate(todoGet.getIsValidate());
+        return todoRepository.save(todoFind).entityToDto();
+    }
+
+    public TodoResponseDto changeStat(int id) {
+        Todo todoFind = todoRepository.findById(id).orElseThrow(NotFoundException::new);
+        todoFind.setIsValidate(!todoFind.getIsValidate());
         return todoRepository.save(todoFind).entityToDto();
     }
 
